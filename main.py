@@ -39,4 +39,27 @@ cv2.imshow("forestnew",erodedimg)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
+#blurring the image 
+img5=cv2.imread("lesson2/forestimg.jpeg",cv2.IMREAD_COLOR)
+cv2.imshow("forest",img5)
+#gaussian blur
+gaussian=cv2.GaussianBlur(img5,(11,11),0)
+cv2.imshow("gaussian",gaussian)
+cv2.waitKey(0)
+
+#median blur
+median=cv2.medianBlur(img5,5)
+cv2.imshow("median",median)
+cv2.waitKey(0)
+
+
+#bilateral blur 
+bilateral=cv2.bilateralFilter(img5,53,85,85)
+cv2.imshow("bilateral",bilateral)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+
 
