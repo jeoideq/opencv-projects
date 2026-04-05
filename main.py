@@ -1,63 +1,34 @@
 import cv2
 import numpy as np
 
-#reads the images
-bg1=cv2.imread("lesson2/background1.jpg", cv2.IMREAD_COLOR)
-bg2=cv2.imread("lesson2/background2.jpg",cv2.IMREAD_COLOR)
-cv2.imshow("background1",bg1)
-cv2.imshow("background2", bg2)
-
-#adds the images, decides the amount 
-bg3=cv2.addWeighted(bg1,0.7,bg2,0.3,1)
-cv2.imshow("backgrond3",bg3)
+hippo=cv2.imread("hippoimg.jpg",cv2.IMREAD_COLOR)
+cv2.imshow("hippo",hippo)
 cv2.waitKey(0)
-cv2.destroyAllWindows()
-img1=cv2.imread("lesson2/dotimg.jpg", cv2.IMREAD_COLOR)
-img2=cv2.imread("lesson2/starimg.jpg", cv2.IMREAD_COLOR)
-cv2.imshow("dotimg",img1)
-cv2.imshow("starimg", img2)
-
-#subtract the image
-img3=cv2.subtract(img2,img1)
-cv2.imshow("newimg",img3)
+#using cvt color function to greyscale image
+new=cv2.cvtColor(hippo,cv2.COLOR_BGR2GRAY)
+cv2.imshow("new",new)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
-#resizing the image
-forestimg=cv2.imread("lesson2/forestimg.jpeg",cv2.IMREAD_COLOR)
-cv2.imshow("forest",forestimg)
-img4=cv2.resize(forestimg,[200,200])
-cv2.imshow("new",img4)
-cv2.waitKey(0)
-
-#erosion of a image
-forestimg=cv2.imread("lesson2/forestimg.jpeg",cv2.IMREAD_COLOR)
-cv2.imshow("forest",forestimg)
-kernel=np.ones((5,5),np.uint8)
-erodedimg=cv2.erode(forestimg,kernel)
-cv2.imshow("forestnew",erodedimg)
+#using averaging of pixels method to greyscale image
+(row,col)=hippo.shape[0:2]
+for i in range(row):
+    for j in range(col):
+        hippo[i,j]=sum(hippo[i,j].astype(np.uint16))//3
+cv2.imshow("average",hippo)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
-#blurring the image 
-img5=cv2.imread("lesson2/forestimg.jpeg",cv2.IMREAD_COLOR)
-cv2.imshow("forest",img5)
-#gaussian blur
-gaussian=cv2.GaussianBlur(img5,(11,11),0)
-cv2.imshow("gaussian",gaussian)
+#rotating an image
+hippo=cv2.imread("hippoimg.jpg",cv2.IMREAD_COLOR)
+cv2.imshow("hippo",hippo)
+M=cv2.getRotationMatrix2D((col/2,row/2),180,1.1)
+result=cv2.warpAffine(hippo,M,(col,row))
+cv2.imshow("rotate",result)
 cv2.waitKey(0)
-
-#median blur
-median=cv2.medianBlur(img5,5)
-cv2.imshow("median",median)
-cv2.waitKey(0)
+cv2.destroyAllWindows
 
 
-#bilateral blur 
-bilateral=cv2.bilateralFilter(img5,53,85,85)
-cv2.imshow("bilateral",bilateral)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
 
 
 
