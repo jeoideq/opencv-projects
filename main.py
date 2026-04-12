@@ -26,7 +26,14 @@ M=cv2.getRotationMatrix2D((col/2,row/2),180,1.1)
 result=cv2.warpAffine(hippo,M,(col,row))
 cv2.imshow("rotate",result)
 cv2.waitKey(0)
-cv2.destroyAllWindows
+cv2.destroyAllWindows()
+
+#convert rgb to hsv
+newconvert=cv2.cvtColor(hippo,cv2.COLOR_BGR2HSV)
+cv2.imshow("hippo",newconvert)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
 
 
 
