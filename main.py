@@ -33,4 +33,19 @@ cv2.imshow("rectangle",forestimg)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
+# draw text on image 
+position=1500,500
+color=(152,70,186)
+font=cv2.FONT_HERSHEY_SIMPLEX
+scale=5
+thickness=10
+text=cv2.putText(forestimg,"hello how are you?",position,font,scale,color,thickness)
+cv2.imshow("text", text)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+
+
 
