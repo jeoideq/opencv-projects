@@ -1,53 +1,38 @@
 import cv2
+from PIL import Image
+import os
 
-forestimg=cv2.imread("forestimg.jpeg",cv2.IMREAD_COLOR)
-cv2.imshow("forestimg", forestimg)
-#draw a line on the image 
+path=r"lesson5/images"
+os.chdir(path)
+sumw=0
+sumh=0
+totalimg=len(os.listdir("."))
+for file in os.listdir("."):
+    img=Image.open(file)
+    width,height=img.size
+    sumw=sumw+width
+    sumh=sumh+height
 
-stpoint=(1500,200)
-endpoint=(200,100)
-color=(28,16,199)
-thickness=50
-line=cv2.line(forestimg,stpoint,endpoint,color,thickness)
-cv2.imshow("line",forestimg)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+averagewidth=sumw/totalimg
+averageheight=sumh/totalimg
 
-#draw a circle
-center=(500,500)
-radius=400
-color=(0,0,0)
-thickness=-1
-circle=cv2.circle(forestimg,center,radius,color,thickness)
-cv2.imshow("circle",circle)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+for file in os.listdir("."):
+    if file.endswith(".jpeg") or file.endswith(".jpg") or file.endswith(".png"):
+        img=Image.open(file)
+        newimg=img.resize([averagewidth,averageheight],Image.Resampling.LANCZOS)
+        newimg.save(file,"JPEG",quality=90)
+        print("resized")
 
-#draw a rectangle
-stpoint=(500,500)
-endpoint=(1500,150)
-color=(0,0,0)
-thickness=-1
-rectangle=cv2.rectangle(forestimg,stpoint,endpoint,color,thickness)
-cv2.imshow("rectangle",forestimg)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+video1="video1.avi"
+images=[]
+for file in os.listdir("."):
+    if file.endswith(".jpeg") or file.endswith("jpg") or file.endswith(".png"):
+        images.append(file)
 
-# draw text on image 
-position=1500,500
-color=(152,70,186)
-font=cv2.FONT_HERSHEY_SIMPLEX
-scale=5
-thickness=10
-text=cv2.putText(forestimg,"hello how are you?",position,font,scale,color,thickness)
-cv2.imshow("text", text)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-
-
-
-
-
+frame=cv2.imread(images[0])
+height,width,layers=frame.shape
+video=cv2.VideoWriter(video1,0,1,(width,height))
+        
 
 
 
