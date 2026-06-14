@@ -5,7 +5,7 @@ import os
 haar_file=r"lesson8/cascade.xml"
 datasets=r"lesson7/datasets"
 print("should be in visable light")
-(images,labels,names,id)=([],(),{},0)
+(images,labels,names,id)=([],[],{},0)
 for (subdirectories,directories,files) in os.walk(datasets):
     for subdirectory in directories:
         names[id]=subdirectory
@@ -25,6 +25,31 @@ webcam=cv2.VideoCapture(0)
 while True:
     (_,im)=webcam.read()
     grey=cv2.cvtColor(im)
+    faces=face_cascade.detectMultiScale(grey,1,3.4)
+    for face in faces:
+        x,y,w,h=face
+        cv2.rectangle(im,(x,y),(x+w,y+h),(250,218,221),4)
+        face=grey[y:y+h,x:x+w]
+        face_resize=cv2.resize(face,(130,100))
+        prediction=model.predict(face_resize)
+        cv2.rectangle(im,(x,y),(x+w,y+h),(250,218,221),4)
+        if prediction[1]<500:
+            cv2.putText(im,"%s-%.0f"%(names(prediction[0]),prediction[1]))
+        else:
+            cv2.putText(im,"image not recognized",(x-10,y-10))
+    cv2.imshow("opencv",im)
+    key=cv2.waitKey(10)
+    if key==27:
+        break
+
+        
+
+
+                      
+        
+
+
+
     
 
 
